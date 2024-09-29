@@ -1,0 +1,28 @@
+
+datasource db {
+  provider = "mysql" // or "postgresql" if you're using PostgreSQL
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Movie {
+  id            Int      @id @default(autoincrement())
+  name          String
+  releaseDate   DateTime
+  averageRating Float   @default(-1)
+  reviews       Review[] // Relation to reviews
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  movieId   Int
+  movie     Movie    @relation(fields: [movieId], references: [id])
+  reviewer  String?  // Optional reviewer name
+  rating    Float    // Rating out of 10
+  comment   String   // Review comment
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
