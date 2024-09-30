@@ -28,7 +28,7 @@ const ReviewsPage = async ({params}:{params: {movieId : string}}) => {
     <p>{movieData[0].averageRating}</p>
 <div className="m-4 flex flex-col gap-4">
     {reviews?.map((review: Review)=>(
-      <ReviewCard key={review.id} review={review.comment} reviewer={review.reviewer} rating={review.rating}/>
+      <ReviewCard key={review.id} review={review.comment} reviewer={review.reviewer} rating={review.rating.toString()}/>
     ))}</div>
   </div>
    );
