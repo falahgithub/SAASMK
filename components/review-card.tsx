@@ -1,7 +1,12 @@
 import { Edit, Trash } from "lucide-react";
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
 
-const ReviewCard = ({review, reviewer, rating}) => {
+interface ReviewCardProps{
+  review: string;
+  reviewer: string;
+  rating: string
+}
+const ReviewCard = ({review, reviewer, rating}: ReviewCardProps) => {
   return ( <>
   <Card>
       <CardHeader>

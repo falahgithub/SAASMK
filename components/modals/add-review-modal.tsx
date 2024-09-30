@@ -3,10 +3,9 @@
 import * as z from 'zod'
 
 import { useZustand } from "@/hooks/useZustand";
-import { Modal } from "../modal";
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { ReviewModal } from '../modal-review ';
@@ -33,13 +32,14 @@ const AddReviewModal = () =>{
   const onSubmit = async(values: z.infer<typeof AddReviewformSchema>) =>{
     console.log(values)
     try {
-      const data = await axios.post(`/api/reviews`, {
+      await axios.post(`/api/reviews`, {
       name: values.name,
       comment: values.comment,
       rating: values.rating,
     });
-    } catch (error : {error: string}) {
-      alert("Missing Movie ID")      
+    } catch (error) {
+      alert("Missing Movie ID")    
+      console.log(error)  
     }
     
     

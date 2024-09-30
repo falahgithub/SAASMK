@@ -13,13 +13,13 @@ import axios from 'axios';
 
 const AddformSchema = z.object({
   name: z.string().min(1),
-  // releaseDate: z.string(),
-  releaseDate: z.preprocess((arg) => {
-    // Convert string or other types to Date object
-    if (typeof arg === "string" || arg instanceof Date) {
-      return new Date(arg);
-    }
-  }, z.date()),  // Validates that the field is of type Date
+  releaseDate: z.string(),
+  // releaseDate: z.preprocess((arg) => {
+  //   // Convert string or other types to Date object
+  //   if (typeof arg === "string" || arg instanceof Date) {
+  //     return new Date(arg);
+  //   }
+  // }, z.date()),  // Validates that the field is of type Date
   averageRating: z.number().min(0).max(10),
   // reviews:z.array(z.string()).default(["No reviews available"])
 });
@@ -38,7 +38,7 @@ const AddModal = () =>{
 
   const onSubmit = async(values: z.infer<typeof AddformSchema>) =>{
     console.log(values);
-    const data = await axios.post(`/api/movies`, {
+    await axios.post(`/api/movies`, {
       name: values.name,
       releaseDate: values.releaseDate,
       averageRating: values.averageRating,

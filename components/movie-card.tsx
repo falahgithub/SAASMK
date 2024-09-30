@@ -4,26 +4,23 @@ import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/comp
 import {  Edit, Trash } from "lucide-react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 
 type Props = {
  name:string;
  releaseDate: string;
  rating:string;
  id:string;
- handleEdit:()=>void;
- handleDelete:()=>void;
 }
 
 const MovieCard = ({name, releaseDate, rating, id}: Props) => {
   
   const handleDelete = async ()=>{
-    const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/movies/${id}`,  {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/movies/${id}`,  {
       method: 'DELETE',  
       headers: {
         'Content-Type': 'application/json', 
       }});
-  const reviews = await data.json();
+  // const reviews = await data.json();
    
   }
 

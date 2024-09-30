@@ -4,7 +4,7 @@ import prisma from '@/lib/prisma';
 
 
 // GET: Fetch all reviews for a specific movie
-export async function GET(req: NextRequest, {params}) {
+export async function GET(req: NextRequest, { params }: { params: { movieId: string } }) {
   const movieId = params.movieId;
 
   if (!movieId) {
@@ -18,7 +18,7 @@ export async function GET(req: NextRequest, {params}) {
 
 
 
-export async function POST(req: NextRequest, {params}) {
+export async function POST(req: NextRequest, { params }: { params: { movieId: string } }) {
   const body = await req.json();
   const movieId = params.movieId;
 
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest, {params}) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
   }
   if(movieId){
-  const review = await prisma.review.create({
+  await prisma.review.create({
     data: {
       movieId: parseInt(movieId),
       reviewer: reviewer || null,
@@ -39,20 +39,21 @@ export async function POST(req: NextRequest, {params}) {
 }
 
 
-  return NextResponse.json(review, { status: 201 });
+  return NextResponse.json(null, { status: 201 });
 
 }
 
-// export async function PUT(req: NextRequest) {
+// export async function PUT(req: NextRequest,  { params }: { params: { movieId: string } }) {
+//   const movieId = params.movieId;
 //   const body = await req.json();
-//   const { movieId, reviewer, rating, comment } = body;
+//   const {reviewer, rating, comment } = body;
 
 //   const reviews = await prisma.review.findMany({
 //     where: { movieId: parseInt(movieId) },
 //   });
   
 //   const averageRating = reviews.reduce((acc, curr) => acc + curr.rating, 0) / reviews.length;
-//   await prisma.movie.update({
+//   const review = await prisma.movie.update({
 //     where: { id: parseInt(movieId) },
 //     data: { averageRating },
 //   });
@@ -61,8 +62,7 @@ export async function POST(req: NextRequest, {params}) {
 // }
 
 // DELETE: Delete a review by its ID
-export async function DELETE(req: NextRequest, {params}) {
-  // const body = await req.json();
+export async function DELETE(req: NextRequest, { params }: { params: { movieId: string } }) {
   const id = params.movieId;
 
   if (!id) {
